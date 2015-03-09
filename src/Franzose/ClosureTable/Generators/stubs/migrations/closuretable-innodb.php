@@ -13,7 +13,7 @@ class {{closure_class}} extends Migration
 
             Schema::create('{{closure_table}}', function(Blueprint $table)
             {
-                $table->increments('ctid');
+                $table->increments('id');
 
                 $table->integer('ancestor', false, true);
                 $table->integer('descendant', false, true);
