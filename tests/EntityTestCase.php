@@ -117,14 +117,27 @@ class EntityTestCase extends BaseTestCase
      */
     public function testCreateUseGivenPosition($initial_position, $test_entity, $assign_position, $expected_position, $test_position)
     {
-        $this->assertEquals($initial_position, Page::find($test_entity)->position, 'Prerequisite doesn\'t match expectation');
+        $this->assertEquals(
+            $initial_position,
+            Page::find($test_entity)->position,
+            'Prerequisite doesn\'t match expectation'
+        );
 
         $entity = new Page(['title' => 'Item 1']);
         $entity->position = $assign_position;
         $entity->save();
 
-        $this->assertEquals($expected_position, $entity->position, 'Saved position should match expected position');
-        $this->assertEquals($test_position, Page::find($test_entity)->position, 'Test entity should have expected position');
+        $this->assertEquals(
+            $expected_position,
+            $entity->position,
+            'Saved position should match expected position'
+        );
+
+        $this->assertEquals(
+            $test_position,
+            Page::find($test_entity)->position,
+            'Test entity should have expected position'
+        );
     }
 
     public function createUseGivenPositionProvider()
@@ -173,8 +186,17 @@ class EntityTestCase extends BaseTestCase
 
         $this->assertEquals(8, Page::find(9)->position); // Sibling node that shouldn't move
 
-        $this->assertEquals($entity1->position, $this->readAttribute($entity1, 'old_position'), 'Position should be the same after a load');
-        $this->assertEquals($entity1->parent_id, $this->readAttribute($entity1, 'old_parent_id'), 'Parent should be the same after a load');
+        $this->assertEquals(
+            $entity1->position,
+            $this->readAttribute($entity1, 'old_position'),
+            'Position should be the same after a load'
+        );
+
+        $this->assertEquals(
+            $entity1->parent_id,
+            $this->readAttribute($entity1, 'old_parent_id'),
+            'Parent should be the same after a load'
+        );
 
         $entity1->title = 'New title';
         $entity1->save();
