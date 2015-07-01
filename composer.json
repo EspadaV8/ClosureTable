@@ -37,9 +37,9 @@
     "doctrine/dbal": "^2.5.1"
   },
   "autoload": {
-    "classmap": ["tests"],
     "psr-4": {
-      "EspadaV8\\": "src/EspadaV8"
+      "EspadaV8\\": "src/EspadaV8",
+      "EspadaVTest\\ClosureTable\\Tests\\": "tests/"
     }
   },
   "config": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace EspadaV8\ClosureTable\Tests\Seeds;
+namespace EspadaVTest\ClosureTable\Tests\Seeds;
 
 use DB;
 use Illuminate\Database\Seeder;
