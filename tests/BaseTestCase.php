@@ -18,7 +18,7 @@ abstract class BaseTestCase extends TestCase
     use ModelHelpers;
 
     public static $debug = false;
-    public static $sqlite_in_memory = false;
+    public static $sqlite_in_memory = true;
 
     public function setUp()
     {

@@ -5,7 +5,7 @@ namespace EspadaVTest\ClosureTable\Tests;
 use DB;
 use EspadaV8\ClosureTable\Models\ClosureTable;
 use EspadaV8\ClosureTable\Models\Entity;
-use EspadaV8\ClosureTable\Tests\Models\Page;
+use EspadaVTest\ClosureTable\Tests\Models\Page;
 use Mockery;
 
 class EntityTestCase extends BaseTestCase
@@ -84,10 +84,8 @@ class EntityTestCase extends BaseTestCase
 
     public function testCreate()
     {
-        DB::statement("SET foreign_key_checks=0");
         ClosureTable::truncate();
         Entity::truncate();
-        DB::statement("SET foreign_key_checks=1");
 
         $entity1 = new Entity;
         $entity1->save();
