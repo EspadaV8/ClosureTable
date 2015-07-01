@@ -59,14 +59,21 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
 
         $query = "
             INSERT INTO {$table} ({$ancestor}, {$descendant}, {$depth})
-            SELECT tbl.{$ancestor}, {$descendantId}, tbl.{$depth}+1
+            SELECT tbl.{$ancestor}, ?, tbl.{$depth}+1
             FROM {$table} AS tbl
-            WHERE tbl.{$descendant} = {$ancestorId}
+            WHERE tbl.{$descendant} = ?
             UNION ALL
-            SELECT {$descendantId}, {$descendantId}, 0
+            SELECT ?, ?, 0
         ";
 
-        DB::statement($query);
+        $bindings = [
+            $descendantId,
+            $ancestorId,
+            $descendantId,
+            $descendantId,
+        ];
+
+        DB::statement($query, $bindings);
     }
 
     /**
@@ -109,11 +116,16 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
             SELECT supertbl.{$ancestor}, subtbl.{$descendant}, supertbl.{$depth}+subtbl.{$depth}+1
             FROM {$table} as supertbl
             CROSS JOIN {$table} as subtbl
-            WHERE supertbl.{$descendant} = {$ancestorId}
-            AND subtbl.{$ancestor} = {$thisDescendantId}
+            WHERE supertbl.{$descendant} = ?
+            AND subtbl.{$ancestor} = ?
         ";
 
-        DB::statement($query);
+        $bindings = [
+            $ancestorId,
+            $thisDescendantId,
+        ];
+
+        DB::statement($query, $bindings);
     }
 
     /**
@@ -133,19 +145,25 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
             WHERE {$descendantColumn} IN (
               SELECT d FROM (
                 SELECT {$descendantColumn} as d FROM {$table}
-                WHERE {$ancestorColumn} = {$descendant}
+                WHERE {$ancestorColumn} = ?
               ) as dct
             )
             AND {$ancestorColumn} IN (
               SELECT a FROM (
                 SELECT {$ancestorColumn} AS a FROM {$table}
-                WHERE {$descendantColumn} = {$descendant}
-                AND {$ancestorColumn} <> {$descendant}
+                WHERE {$descendantColumn} = ?
+                AND {$ancestorColumn} <> ?
               ) as ct
             )
         ";
 
-        DB::delete($query);
+        $bindings = [
+            $descendant,
+            $descendant,
+            $descendant,
+        ];
+
+        DB::delete($query, $bindings);
     }
 
     /**
