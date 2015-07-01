@@ -1,6 +1,6 @@
 <?php
 
-namespace EspadaVTest\ClosureTable\Tests;
+namespace EspadaVTest\ClosureTable;
 
 use DB;
 use Event;
@@ -11,7 +11,7 @@ use Way\Tests\ModelHelpers;
 
 /**
  * Class BaseTestCase
- * @package EspadaVTest\ClosureTable\Tests
+ * @package EspadaVTest\ClosureTable
  */
 abstract class BaseTestCase extends TestCase
 {
@@ -40,7 +40,7 @@ abstract class BaseTestCase extends TestCase
         ]);
 
         $artisan->call('db:seed', [
-            '--class' => 'EspadaVTest\ClosureTable\Tests\Seeds\EntitiesSeeder'
+            '--class' => 'EspadaVTest\ClosureTable\Seeds\EntitiesSeeder'
         ]);
 
         if (static::$debug) {

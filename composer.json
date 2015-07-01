@@ -39,7 +39,7 @@
   "autoload": {
     "psr-4": {
       "EspadaV8\\": "src/EspadaV8",
-      "EspadaVTest\\ClosureTable\\Tests\\": "tests/"
+      "EspadaVTest\\ClosureTable\\": "tests/"
     }
   },
   "config": {

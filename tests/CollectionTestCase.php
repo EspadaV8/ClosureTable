@@ -1,6 +1,6 @@
 <?php
 
-namespace EspadaVTest\ClosureTable\Tests;
+namespace EspadaVTest\ClosureTable;
 
 use EspadaV8\ClosureTable\Extensions\Collection;
 use EspadaV8\ClosureTable\Models\Entity;
