@@ -1,4 +1,5 @@
 <?php
+
 {{namespace}}
 
 use EspadaV8\ClosureTable\Contracts\EntityInterface;

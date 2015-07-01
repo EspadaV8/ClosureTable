@@ -1,4 +1,5 @@
 <?php
+
 namespace EspadaV8\ClosureTable\Generators;
 
 use Illuminate\Filesystem\Filesystem;

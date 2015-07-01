@@ -1,4 +1,5 @@
 <?php
+
 namespace EspadaV8\ClosureTable\Models;
 
 use DB;

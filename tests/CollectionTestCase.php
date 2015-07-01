@@ -1,4 +1,5 @@
 <?php
+
 namespace EspadaV8\ClosureTable\Tests;
 
 use EspadaV8\ClosureTable\Extensions\Collection;

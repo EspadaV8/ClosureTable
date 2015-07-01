@@ -1,23 +1,19 @@
 <?php
+
 namespace EspadaV8\ClosureTable;
 
-use Illuminate\Foundation\Composer;
-use Illuminate\Support\ServiceProvider;
 use EspadaV8\ClosureTable\Console\ClosureTableCommand;
-use EspadaV8\ClosureTable\Console\MakeCommand;
-use EspadaV8\ClosureTable\Generators\Migration as Migrator;
-use EspadaV8\ClosureTable\Generators\Model as Modeler;
+use Illuminate\Support\ServiceProvider;
 
 /**
- * ClosureTable service provider
+ * ClosureTable service provider.
  *
  * @package EspadaV8\ClosureTable
  */
 class ClosureTableServiceProvider extends ServiceProvider
 {
-
     /**
-     * Current library version
+     * Current library version.
      */
     const VERSION = 4;
 
@@ -63,7 +59,6 @@ class ClosureTableServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array();
+        return [];
     }
-
 }

@@ -1,11 +1,12 @@
 <?php
+
 namespace EspadaV8\ClosureTable\Tests;
 
 use DB;
 use EspadaV8\ClosureTable\Models\ClosureTable;
-use Mockery;
 use EspadaV8\ClosureTable\Models\Entity;
 use EspadaV8\ClosureTable\Tests\Models\Page;
+use Mockery;
 
 class EntityTestCase extends BaseTestCase
 {

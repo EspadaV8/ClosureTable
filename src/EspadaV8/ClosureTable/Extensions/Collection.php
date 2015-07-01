@@ -1,4 +1,5 @@
 <?php
+
 namespace EspadaV8\ClosureTable\Extensions;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;

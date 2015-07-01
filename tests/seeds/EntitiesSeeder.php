@@ -1,7 +1,8 @@
 <?php
+
 namespace EspadaV8\ClosureTable\Tests\Seeds;
 
-use \DB;
+use DB;
 use Illuminate\Database\Seeder;
 
 class EntitiesSeeder extends Seeder

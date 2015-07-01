@@ -1,4 +1,5 @@
 <?php
+
 namespace EspadaV8\ClosureTable\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
@@ -795,7 +796,7 @@ class Entity extends Eloquent implements EntityInterface
 
         if (is_int($direction)) {
             $query->where($column, '=', $direction);
-        } else if (is_array($direction)) {
+        } elseif (is_array($direction)) {
             $query->buildWherePosition($this->getPositionColumn(), $direction);
         }
 
@@ -1306,7 +1307,7 @@ class Entity extends Eloquent implements EntityInterface
                 if ($this->position > $this->old_position) {
                     $range = [$this->old_position, $this->position];
                     $action = 'decrement';
-                } else if ($this->position < $this->old_position) {
+                } elseif ($this->position < $this->old_position) {
                     $range = [$this->position, $this->old_position];
                     $action = 'increment';
                 }
