@@ -1,7 +1,7 @@
 <?php
 {{namespace}}
 
-use Franzose\ClosureTable\Models\ClosureTable;
+use EspadaV8\ClosureTable\Models\ClosureTable;
 
 class {{closure_class}} extends ClosureTable implements {{closure_class}}Interface
 {

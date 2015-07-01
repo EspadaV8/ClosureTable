@@ -1,9 +1,9 @@
 # ClosureTable
-[![Build Status](https://travis-ci.org/franzose/ClosureTable.png)](https://travis-ci.org/franzose/ClosureTable)
-[![Latest Stable Version](https://poser.pugx.org/franzose/closure-table/v/stable.png)](https://packagist.org/packages/franzose/closure-table)
-[![Total Downloads](https://poser.pugx.org/franzose/closure-table/downloads.png)](https://packagist.org/packages/franzose/closure-table)
+[![Build Status](https://travis-ci.org/espadav8/ClosureTable.png)](https://travis-ci.org/espadav8/ClosureTable)
+[![Latest Stable Version](https://poser.pugx.org/espadav8/closure-table/v/stable.png)](https://packagist.org/packages/espadav8/closure-table)
+[![Total Downloads](https://poser.pugx.org/espadav8/closure-table/downloads.png)](https://packagist.org/packages/espadav8/closure-table)
 
-## NOTE: Master branch is now for Laravel 5.<br>If you use Laravel 4, please see L4 branch! 
+## NOTE: Master branch is now for Laravel 5.<br>If you use Laravel 4, please see L4 branch!
 
 Hi, this is a database package for Laravel. It's intended to use when you need to operate hierarchical data in database. The package is an implementation of a well-known database design pattern called Closure Table. The package includes generators for models and migrations.
 
@@ -12,7 +12,7 @@ To install the package, put the following in your composer.json:
 
 ```json
 "require": {
-	"franzose/closure-table": "4.*"
+    "espadav8/closure-table": "4.*"
 }
 ```
 
@@ -20,7 +20,7 @@ And to `app/config/app.php`:
 ```php
 'providers' => array(
         // ...
-        'Franzose\ClosureTable\ClosureTableServiceProvider',
+        'EspadaV8\ClosureTable\ClosureTableServiceProvider',
     ),
 ```
 

@@ -1,7 +1,7 @@
 <?php
-namespace Franzose\ClosureTable\Tests;
+namespace EspadaV8\ClosureTable\Tests;
 
-use Franzose\ClosureTable\Models\ClosureTable;
+use EspadaV8\ClosureTable\Models\ClosureTable;
 
 class ClosureTableTestCase extends BaseTestCase
 {

@@ -1,12 +1,12 @@
 <?php
-namespace Franzose\ClosureTable\Generators;
+namespace EspadaV8\ClosureTable\Generators;
 
-use Franzose\ClosureTable\Extensions\Str as ExtStr;
+use EspadaV8\ClosureTable\Extensions\Str as ExtStr;
 
 /**
  * ClosureTable specific models generator class.
  *
- * @package Franzose\ClosureTable\Generators
+ * @package EspadaV8\ClosureTable\Generators
  */
 class Model extends Generator
 {

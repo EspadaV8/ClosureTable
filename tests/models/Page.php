@@ -1,7 +1,7 @@
 <?php
-namespace Franzose\ClosureTable\Tests\Models;
+namespace EspadaV8\ClosureTable\Tests\Models;
 
-use Franzose\ClosureTable\Models\Entity;
+use EspadaV8\ClosureTable\Models\Entity;
 
 class Page extends Entity
 {

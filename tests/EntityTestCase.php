@@ -1,11 +1,11 @@
 <?php
-namespace Franzose\ClosureTable\Tests;
+namespace EspadaV8\ClosureTable\Tests;
 
 use DB;
-use Franzose\ClosureTable\Models\ClosureTable;
+use EspadaV8\ClosureTable\Models\ClosureTable;
 use Mockery;
-use Franzose\ClosureTable\Models\Entity;
-use Franzose\ClosureTable\Tests\Models\Page;
+use EspadaV8\ClosureTable\Models\Entity;
+use EspadaV8\ClosureTable\Tests\Models\Page;
 
 class EntityTestCase extends BaseTestCase
 {
@@ -226,7 +226,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(10);
         $parent = $entity->getParent();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Models\Entity', $parent);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $parent);
         $this->assertEquals(9, $parent->getKey());
     }
 
@@ -236,7 +236,7 @@ class EntityTestCase extends BaseTestCase
         $entity->moveTo(0, 15);
         $parent = $entity->getParent();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Models\Entity', $parent);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $parent);
         $this->assertEquals(15, $parent->getKey());
     }
 
@@ -245,7 +245,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(12);
         $ancestors = $entity->getAncestors();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Extensions\Collection', $ancestors);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $ancestors);
         $this->assertCount(3, $ancestors);
         $this->assertArrayValuesEquals($ancestors->modelKeys(), [9, 10, 11]);
     }
@@ -255,7 +255,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(12);
         $ancestors = $entity->getAncestorsWhere('excerpt', '=', '');
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Extensions\Collection', $ancestors);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $ancestors);
         $this->assertCount(0, $ancestors);
 
         $ancestors = $entity->getAncestorsWhere($this->entity->getPositionColumn(), '=', 0);
@@ -284,7 +284,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(9);
         $descendants = $entity->getDescendants();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Extensions\Collection', $descendants);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $descendants);
         $this->assertCount(6, $descendants);
         $this->assertArrayValuesEquals($descendants->modelKeys(), [10, 11, 12, 13, 14, 15]);
     }
@@ -319,7 +319,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(9);
         $children = $entity->getChildren();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Extensions\Collection', $children);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $children);
         $this->assertCount(4, $children);
         $this->assertArrayValuesEquals($children->modelKeys(), [10, 13, 14, 15]);
     }
@@ -337,7 +337,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(9);
         $child = $entity->getChildAt(2);
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Models\Entity', $child);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $child);
         $this->assertEquals(2, $child->position);
     }
 
@@ -346,7 +346,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(9);
         $child = $entity->getFirstChild();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Models\Entity', $child);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $child);
         $this->assertEquals(0, $child->position);
     }
 
@@ -355,7 +355,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(9);
         $child = $entity->getLastChild();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Models\Entity', $child);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $child);
         $this->assertEquals(3, $child->position);
     }
 
@@ -364,7 +364,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(9);
         $children = $entity->getChildrenRange(0, 2);
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Extensions\Collection', $children);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $children);
         $this->assertCount(3, $children);
         $this->assertEquals(0, $children[0]->position);
         $this->assertEquals(1, $children[1]->position);
@@ -440,7 +440,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(9);
         $entity->removeChildren(1);
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Models\Entity', $entity->getFirstChild());
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $entity->getFirstChild());
         $this->assertEquals(1, $entity->countChildren());
     }
 
@@ -449,7 +449,7 @@ class EntityTestCase extends BaseTestCase
         $entity = Entity::find(13);
         $siblings = $entity->getSiblings();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Extensions\Collection', $siblings);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $siblings);
         $this->assertCount(3, $siblings);
         $this->assertEquals(10, $siblings[0]->getKey());
         $this->assertEquals(14, $siblings[1]->getKey());
@@ -597,7 +597,7 @@ class EntityTestCase extends BaseTestCase
 
         $sibling = $entity->getNextSibling();
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Models\Entity', $sibling);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $sibling);
         $this->assertEquals(4, $sibling->position);
     }
 
@@ -754,7 +754,7 @@ class EntityTestCase extends BaseTestCase
 
         $pages = Page::createFromArray($array);
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Extensions\Collection', $pages);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $pages);
         $this->assertCount(3, $pages);
 
         $pageZero = $pages[0];

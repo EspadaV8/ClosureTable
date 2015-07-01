@@ -1,12 +1,12 @@
 <?php
-namespace Franzose\ClosureTable\Extensions;
+namespace EspadaV8\ClosureTable\Extensions;
 
 use Illuminate\Support\Str as BaseStr;
 
 /**
  * Extension of the base Str class.
  *
- * @package Franzose\ClosureTable\Extensions
+ * @package EspadaV8\ClosureTable\Extensions
  */
 class Str extends BaseStr
 {

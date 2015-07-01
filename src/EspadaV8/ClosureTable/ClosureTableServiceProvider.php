@@ -1,17 +1,17 @@
 <?php
-namespace Franzose\ClosureTable;
+namespace EspadaV8\ClosureTable;
 
 use Illuminate\Foundation\Composer;
 use Illuminate\Support\ServiceProvider;
-use Franzose\ClosureTable\Console\ClosureTableCommand;
-use Franzose\ClosureTable\Console\MakeCommand;
-use Franzose\ClosureTable\Generators\Migration as Migrator;
-use Franzose\ClosureTable\Generators\Model as Modeler;
+use EspadaV8\ClosureTable\Console\ClosureTableCommand;
+use EspadaV8\ClosureTable\Console\MakeCommand;
+use EspadaV8\ClosureTable\Generators\Migration as Migrator;
+use EspadaV8\ClosureTable\Generators\Model as Modeler;
 
 /**
  * ClosureTable service provider
  *
- * @package Franzose\ClosureTable
+ * @package EspadaV8\ClosureTable
  */
 class ClosureTableServiceProvider extends ServiceProvider
 {
@@ -50,7 +50,7 @@ class ClosureTableServiceProvider extends ServiceProvider
         });
 
         $this->app['command.closuretable.make'] = $this->app->share(function ($app) {
-            return $app['Franzose\ClosureTable\Console\MakeCommand'];
+            return $app['EspadaV8\ClosureTable\Console\MakeCommand'];
         });
 
         $this->commands('command.closuretable', 'command.closuretable.make');

@@ -1,18 +1,18 @@
 <?php
-namespace Franzose\ClosureTable\Console;
+namespace EspadaV8\ClosureTable\Console;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Composer;
 use Symfony\Component\Console\Input\InputOption;
-use Franzose\ClosureTable\Generators\Migration;
-use Franzose\ClosureTable\Generators\Model;
-use Franzose\ClosureTable\Extensions\Str as ExtStr;
+use EspadaV8\ClosureTable\Generators\Migration;
+use EspadaV8\ClosureTable\Generators\Model;
+use EspadaV8\ClosureTable\Extensions\Str as ExtStr;
 
 /**
  * ClosureTable scaffolding command, created migrations and models.
  *
- * @package Franzose\ClosureTable\Console
+ * @package EspadaV8\ClosureTable\Console
  */
 class MakeCommand extends Command
 {
@@ -35,14 +35,14 @@ class MakeCommand extends Command
     /**
      * Migrations generator instance.
      *
-     * @var \Franzose\ClosureTable\Generators\Migration
+     * @var \EspadaV8\ClosureTable\Generators\Migration
      */
     protected $migrator;
 
     /**
      * Models generator instance.
      *
-     * @var \Franzose\ClosureTable\Generators\Model
+     * @var \EspadaV8\ClosureTable\Generators\Model
      */
     protected $modeler;
 

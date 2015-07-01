@@ -1,5 +1,5 @@
 <?php
-namespace Franzose\ClosureTable\Tests\Seeds;
+namespace EspadaV8\ClosureTable\Tests\Seeds;
 
 use \DB;
 use Illuminate\Database\Seeder;

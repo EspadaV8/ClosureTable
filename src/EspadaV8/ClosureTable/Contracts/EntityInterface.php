@@ -1,10 +1,10 @@
 <?php
-namespace Franzose\ClosureTable\Contracts;
+namespace EspadaV8\ClosureTable\Contracts;
 
 /**
  * Basic Entity model interface.
  *
- * @package Franzose\ClosureTable\Contracts
+ * @package EspadaV8\ClosureTable\Contracts
  */
 interface EntityInterface
 {
@@ -111,7 +111,7 @@ interface EntityInterface
      * Retrieves all ancestors of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getAncestors(array $columns = ['*']);
 
@@ -122,7 +122,7 @@ interface EntityInterface
      * @param mixed $operator
      * @param mixed $value
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getAncestorsWhere($column, $operator = null, $value = null, array $columns = ['*']);
 
@@ -144,7 +144,7 @@ interface EntityInterface
      * Retrieves all descendants of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getDescendants(array $columns = ['*']);
 
@@ -155,7 +155,7 @@ interface EntityInterface
      * @param mixed $operator
      * @param mixed $value
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getDescendantsWhere($column, $operator = null, $value = null, array $columns = ['*']);
 
@@ -177,7 +177,7 @@ interface EntityInterface
      * Retrieves all children of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getChildren(array $columns = ['*']);
 
@@ -263,7 +263,7 @@ interface EntityInterface
      * Retrieves all siblings of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getSiblings(array $columns = ['*']);
 
@@ -285,7 +285,7 @@ interface EntityInterface
      * Retrieves neighbors (immediate previous and immediate next models) of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getNeighbors(array $columns = ['*']);
 
@@ -326,7 +326,7 @@ interface EntityInterface
      * Retrieves all previous siblings of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getPrevSiblings(array $columns = ['*']);
 
@@ -356,7 +356,7 @@ interface EntityInterface
      * Retrieves all next siblings of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getNextSiblings(array $columns = ['*']);
 
@@ -380,7 +380,7 @@ interface EntityInterface
      * @param int $from
      * @param int $to
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getSiblingsRange($from, $to = null, array $columns = ['*']);
 
@@ -407,7 +407,7 @@ interface EntityInterface
      * Retrieves root (with no ancestors) models.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public static function getRoots(array $columns = ['*']);
 
@@ -423,7 +423,7 @@ interface EntityInterface
      * Retrieves entire tree.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public static function getTree(array $columns = ['*']);
 
@@ -432,7 +432,7 @@ interface EntityInterface
      *
      * @param array $tree
      * @param EntityInterface $parent
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public static function createFromArray(array $tree, EntityInterface $parent);
 

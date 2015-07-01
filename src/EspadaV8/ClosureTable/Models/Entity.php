@@ -1,11 +1,11 @@
 <?php
-namespace Franzose\ClosureTable\Models;
+namespace EspadaV8\ClosureTable\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Franzose\ClosureTable\Extensions\QueryBuilder;
-use Franzose\ClosureTable\Contracts\EntityInterface;
-use Franzose\ClosureTable\Extensions\Collection;
+use EspadaV8\ClosureTable\Extensions\QueryBuilder;
+use EspadaV8\ClosureTable\Contracts\EntityInterface;
+use EspadaV8\ClosureTable\Extensions\Collection;
 
 /**
  * Basic entity class.
@@ -18,7 +18,7 @@ use Franzose\ClosureTable\Extensions\Collection;
  * @property int parent_id Alias for the direct ancestor identifier attribute name
  * @property int real_depth Alias for the real depth attribute name
  *
- * @package Franzose\ClosureTable
+ * @package EspadaV8\ClosureTable
  */
 class Entity extends Eloquent implements EntityInterface
 {
@@ -27,7 +27,7 @@ class Entity extends Eloquent implements EntityInterface
      *
      * @var ClosureTable
      */
-    protected $closure = 'Franzose\ClosureTable\Models\ClosureTable';
+    protected $closure = 'EspadaV8\ClosureTable\Models\ClosureTable';
 
     /**
      * Cached "previous" (i.e. before the model is moved) direct ancestor id of this model.
@@ -94,7 +94,7 @@ class Entity extends Eloquent implements EntityInterface
         // The default class name of the closure table was not changed
         // so we define and set default closure table name automagically.
         // This can prevent useless copy paste of closure table models.
-        if (get_class($this->closure) == 'Franzose\ClosureTable\Models\ClosureTable') {
+        if (get_class($this->closure) == 'EspadaV8\ClosureTable\Models\ClosureTable') {
             $table = $this->getTable() . '_closure';
             $this->closure->setTable($table);
         }
@@ -434,7 +434,7 @@ class Entity extends Eloquent implements EntityInterface
      * Retrieves all descendants of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getDescendants(array $columns = ['*'])
     {
@@ -512,7 +512,7 @@ class Entity extends Eloquent implements EntityInterface
      * Retrieves all children of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getChildren(array $columns = ['*'])
     {
@@ -806,7 +806,7 @@ class Entity extends Eloquent implements EntityInterface
      * Retrives all siblings of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getSiblings(array $columns = ['*'])
     {
@@ -837,7 +837,7 @@ class Entity extends Eloquent implements EntityInterface
      * Retrieves neighbors (immediate previous and immediate next models) of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getNeighbors(array $columns = ['*'])
     {
@@ -893,7 +893,7 @@ class Entity extends Eloquent implements EntityInterface
      * Retrieves all previous siblings of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getPrevSiblings(array $columns = ['*'])
     {
@@ -935,7 +935,7 @@ class Entity extends Eloquent implements EntityInterface
      * Retrieves all next siblings of a model.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public function getNextSiblings(array $columns = ['*'])
     {
@@ -1027,7 +1027,7 @@ class Entity extends Eloquent implements EntityInterface
      * Retrieves root (with no ancestors) models.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public static function getRoots(array $columns = ['*'])
     {
@@ -1065,7 +1065,7 @@ class Entity extends Eloquent implements EntityInterface
      * Retrieves entire tree.
      *
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public static function getTree(array $columns = ['*'])
     {
@@ -1085,7 +1085,7 @@ class Entity extends Eloquent implements EntityInterface
      * @param mixed $operator
      * @param mixed $value
      * @param array $columns
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public static function getTreeWhere($column, $operator = null, $value = null, array $columns = ['*'])
     {
@@ -1102,8 +1102,8 @@ class Entity extends Eloquent implements EntityInterface
      * Saves models from the given attributes array.
      *
      * @param array $tree
-     * @param \Franzose\ClosureTable\Contracts\EntityInterface $parent
-     * @return \Franzose\ClosureTable\Extensions\Collection
+     * @param \EspadaV8\ClosureTable\Contracts\EntityInterface $parent
+     * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
     public static function createFromArray(array $tree, EntityInterface $parent = null)
     {

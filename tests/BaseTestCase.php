@@ -1,16 +1,16 @@
 <?php
-namespace Franzose\ClosureTable\Tests;
+namespace EspadaV8\ClosureTable\Tests;
 
 use DB;
 use Event;
 use Orchestra\Testbench\TestCase;
 use Mockery;
-use Franzose\ClosureTable\Models\Entity;
+use EspadaV8\ClosureTable\Models\Entity;
 use Way\Tests\ModelHelpers;
 
 /**
  * Class BaseTestCase
- * @package Franzose\ClosureTable\Tests
+ * @package EspadaV8\ClosureTable\Tests
  */
 abstract class BaseTestCase extends TestCase
 {
@@ -23,8 +23,8 @@ abstract class BaseTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->app->bind('Franzose\ClosureTable\Contracts\EntityInterface', 'Franzose\ClosureTable\Models\Entity');
-        $this->app->bind('Franzose\ClosureTable\Contracts\ClosureTableInterface', 'Franzose\ClosureTable\Models\ClosureTable');
+        $this->app->bind('EspadaV8\ClosureTable\Contracts\EntityInterface', 'EspadaV8\ClosureTable\Models\Entity');
+        $this->app->bind('EspadaV8\ClosureTable\Contracts\ClosureTableInterface', 'EspadaV8\ClosureTable\Models\ClosureTable');
 
         if (!static::$sqlite_in_memory) {
             DB::statement('DROP TABLE IF EXISTS entities_closure');
@@ -39,7 +39,7 @@ abstract class BaseTestCase extends TestCase
         ]);
 
         $artisan->call('db:seed', [
-            '--class' => 'Franzose\ClosureTable\Tests\Seeds\EntitiesSeeder'
+            '--class' => 'EspadaV8\ClosureTable\Tests\Seeds\EntitiesSeeder'
         ]);
 
         if (static::$debug) {

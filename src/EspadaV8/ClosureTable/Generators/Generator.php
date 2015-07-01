@@ -1,12 +1,12 @@
 <?php
-namespace Franzose\ClosureTable\Generators;
+namespace EspadaV8\ClosureTable\Generators;
 
 use Illuminate\Filesystem\Filesystem;
 
 /**
  * Basic generator class.
  *
- * @package Franzose\ClosureTable\Generators
+ * @package EspadaV8\ClosureTable\Generators
  */
 abstract class Generator
 {

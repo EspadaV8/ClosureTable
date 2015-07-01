@@ -1,12 +1,12 @@
 <?php
-namespace Franzose\ClosureTable\Extensions;
+namespace EspadaV8\ClosureTable\Extensions;
 
 use Illuminate\Database\Query\Builder as BaseQueryBuilder;
 
 /**
  * Extended Query Builder.
  *
- * @package Franzose\ClosureTable\Extensions
+ * @package EspadaV8\ClosureTable\Extensions
  */
 class QueryBuilder extends BaseQueryBuilder
 {

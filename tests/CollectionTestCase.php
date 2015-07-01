@@ -1,8 +1,8 @@
 <?php
-namespace Franzose\ClosureTable\Tests;
+namespace EspadaV8\ClosureTable\Tests;
 
-use Franzose\ClosureTable\Extensions\Collection;
-use Franzose\ClosureTable\Models\Entity;
+use EspadaV8\ClosureTable\Extensions\Collection;
+use EspadaV8\ClosureTable\Models\Entity;
 use Mockery;
 
 class CollectionTestCase extends BaseTestCase
@@ -61,7 +61,7 @@ class CollectionTestCase extends BaseTestCase
 
         $children = $collection->getChildrenOf(0);
 
-        $this->assertInstanceOf('Franzose\ClosureTable\Extensions\Collection', $children);
+        $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $children);
         $this->assertCount(3, $children);
     }
 }

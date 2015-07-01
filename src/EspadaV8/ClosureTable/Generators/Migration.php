@@ -1,13 +1,13 @@
 <?php
-namespace Franzose\ClosureTable\Generators;
+namespace EspadaV8\ClosureTable\Generators;
 
 use Carbon\Carbon;
-use Franzose\ClosureTable\Extensions\Str as ExtStr;
+use EspadaV8\ClosureTable\Extensions\Str as ExtStr;
 
 /**
  * ClosureTable specific migrations generator class.
  *
- * @package Franzose\ClosureTable\Generators
+ * @package EspadaV8\ClosureTable\Generators
  */
 class Migration extends Generator
 {

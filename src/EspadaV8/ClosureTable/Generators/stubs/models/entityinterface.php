@@ -1,7 +1,7 @@
 <?php
 {{namespace}}
 
-use Franzose\ClosureTable\Contracts\EntityInterface;
+use EspadaV8\ClosureTable\Contracts\EntityInterface;
 
 interface {{entity_class}}Interface extends EntityInterface
 {

@@ -1,9 +1,9 @@
 <?php
-namespace Franzose\ClosureTable\Models;
+namespace EspadaV8\ClosureTable\Models;
 
 use DB;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Franzose\ClosureTable\Contracts\ClosureTableInterface;
+use EspadaV8\ClosureTable\Contracts\ClosureTableInterface;
 
 /**
  * Basic ClosureTable model. Performs actions on the relationships table.
@@ -12,7 +12,7 @@ use Franzose\ClosureTable\Contracts\ClosureTableInterface;
  * @property int descendant Alias for the descendant attribute name
  * @property int depth Alias for the depth attribute name
  *
- * @package Franzose\ClosureTable
+ * @package EspadaV8\ClosureTable
  */
 class ClosureTable extends Eloquent implements ClosureTableInterface
 {

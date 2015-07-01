@@ -1,13 +1,13 @@
 <?php
-namespace Franzose\ClosureTable\Extensions;
+namespace EspadaV8\ClosureTable\Extensions;
 
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Franzose\ClosureTable\Models\Entity;
+use EspadaV8\ClosureTable\Models\Entity;
 
 /**
  * Extended Collection class. Provides some useful methods.
  *
- * @package Franzose\ClosureTable\Extensions
+ * @package EspadaV8\ClosureTable\Extensions
  */
 class Collection extends EloquentCollection
 {

@@ -1,13 +1,13 @@
 <?php
-namespace Franzose\ClosureTable\Console;
+namespace EspadaV8\ClosureTable\Console;
 
-use Franzose\ClosureTable\ClosureTableServiceProvider as CT;
+use EspadaV8\ClosureTable\ClosureTableServiceProvider as CT;
 use Illuminate\Console\Command;
 
 /**
  * Basic ClosureTable command, outputs information about the library in short.
  *
- * @package Franzose\ClosureTable\Console
+ * @package EspadaV8\ClosureTable\Console
  */
 class ClosureTableCommand extends Command
 {

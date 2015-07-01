@@ -5,14 +5,14 @@ ClosureTable Documentation
 
 Hi, this is a database package for Laravel. It's intended to use when you need to operate hierarchical data in database. The package is an implementation of a well-known database design pattern called Closure Table. The package includes generators for models and migrations.
 
-.. image:: https://travis-ci.org/franzose/ClosureTable.png
-   :target: https://travis-ci.org/franzose/ClosureTable
+.. image:: https://travis-ci.org/espadav8/ClosureTable.png
+   :target: https://travis-ci.org/espadav8/ClosureTable
 
-.. image:: https://poser.pugx.org/franzose/closure-table/v/stable.png
-   :target: https://packagist.org/packages/franzose/closure-table
+.. image:: https://poser.pugx.org/espadav8/closure-table/v/stable.png
+   :target: https://packagist.org/packages/espadav8/closure-table
 
-.. image:: https://poser.pugx.org/franzose/closure-table/downloads.png
-   :target: https://packagist.org/packages/franzose/closure-table
+.. image:: https://poser.pugx.org/espadav8/closure-table/downloads.png
+   :target: https://packagist.org/packages/espadav8/closure-table
 
 Contents
 ========

@@ -1,10 +1,10 @@
 <?php
-namespace Franzose\ClosureTable\Contracts;
+namespace EspadaV8\ClosureTable\Contracts;
 
 /**
  * Basic ClosureTable model interface.
  *
- * @package Franzose\ClosureTable
+ * @package EspadaV8\ClosureTable
  */
 interface ClosureTableInterface
 {
