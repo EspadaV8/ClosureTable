@@ -3,8 +3,8 @@
 namespace EspadaV8\ClosureTable\Models;
 
 use DB;
-use Illuminate\Database\Eloquent\Model as Eloquent;
 use EspadaV8\ClosureTable\Contracts\ClosureTableInterface;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
  * Basic ClosureTable model. Performs actions on the relationships table.

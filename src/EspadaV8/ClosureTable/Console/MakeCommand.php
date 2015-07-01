@@ -2,13 +2,13 @@
 
 namespace EspadaV8\ClosureTable\Console;
 
+use EspadaV8\ClosureTable\Extensions\Str as ExtStr;
+use EspadaV8\ClosureTable\Generators\Migration;
+use EspadaV8\ClosureTable\Generators\Model;
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Composer;
 use Symfony\Component\Console\Input\InputOption;
-use EspadaV8\ClosureTable\Generators\Migration;
-use EspadaV8\ClosureTable\Generators\Model;
-use EspadaV8\ClosureTable\Extensions\Str as ExtStr;
 
 /**
  * ClosureTable scaffolding command, created migrations and models.

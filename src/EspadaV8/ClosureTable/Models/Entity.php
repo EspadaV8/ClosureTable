@@ -2,11 +2,11 @@
 
 namespace EspadaV8\ClosureTable\Models;
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use EspadaV8\ClosureTable\Extensions\QueryBuilder;
 use EspadaV8\ClosureTable\Contracts\EntityInterface;
 use EspadaV8\ClosureTable\Extensions\Collection;
+use EspadaV8\ClosureTable\Extensions\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
  * Basic entity class.

@@ -1,1 +1,6 @@
 preset: psr2
+
+enabled:
+  - strict
+  - strict_param
+  - concat_with_spaces

@@ -2,8 +2,8 @@
 
 namespace EspadaV8\ClosureTable\Extensions;
 
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use EspadaV8\ClosureTable\Models\Entity;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 /**
  * Extended Collection class. Provides some useful methods.

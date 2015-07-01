@@ -3,10 +3,10 @@
 namespace EspadaVTest\ClosureTable;
 
 use DB;
-use Event;
-use Orchestra\Testbench\TestCase;
-use Mockery;
 use EspadaV8\ClosureTable\Models\Entity;
+use Event;
+use Mockery;
+use Orchestra\Testbench\TestCase;
 use Way\Tests\ModelHelpers;
 
 /**
