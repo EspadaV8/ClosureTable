@@ -11,5 +11,5 @@ class {{closure_class}} extends ClosureTable implements {{closure_class}}Interfa
      *
      * @var string
      */
-    protected $table = '{{closure_table}}';
+    protected $table = {{closure_table}}::class;
 }

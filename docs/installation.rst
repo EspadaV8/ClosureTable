@@ -19,5 +19,5 @@ And to ``app/config/app.php``:
 
     'providers' => array(
         // ...
-        'EspadaV8\ClosureTable\ClosureTableServiceProvider',
+        EspadaV8\ClosureTable\ClosureTableServiceProvider::class,
     ),

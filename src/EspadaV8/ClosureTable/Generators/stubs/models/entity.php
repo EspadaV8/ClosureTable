@@ -18,5 +18,5 @@ class {{entity_class}} extends Entity implements {{entity_class}}Interface
      *
      * @var {{closure_class_short}}
      */
-    protected $closure = '{{closure_class}}';
+    protected $closure = {{closure_class}}::class;
 }

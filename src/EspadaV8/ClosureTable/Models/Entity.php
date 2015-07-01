@@ -28,7 +28,7 @@ class Entity extends Eloquent implements EntityInterface
      *
      * @var ClosureTable
      */
-    protected $closure = 'EspadaV8\ClosureTable\Models\ClosureTable';
+    protected $closure = \EspadaV8\ClosureTable\Models\ClosureTable::class;
 
     /**
      * Cached "previous" (i.e. before the model is moved) direct ancestor id of this model.
@@ -95,7 +95,7 @@ class Entity extends Eloquent implements EntityInterface
         // The default class name of the closure table was not changed
         // so we define and set default closure table name automagically.
         // This can prevent useless copy paste of closure table models.
-        if (get_class($this->closure) === 'EspadaV8\ClosureTable\Models\ClosureTable') {
+        if (get_class($this->closure) === \EspadaV8\ClosureTable\Models\ClosureTable::class) {
             $table = $this->getTable() . '_closure';
             $this->closure->setTable($table);
         }
