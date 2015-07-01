@@ -95,7 +95,7 @@ class Entity extends Eloquent implements EntityInterface
         // The default class name of the closure table was not changed
         // so we define and set default closure table name automagically.
         // This can prevent useless copy paste of closure table models.
-        if (get_class($this->closure) == 'EspadaV8\ClosureTable\Models\ClosureTable') {
+        if (get_class($this->closure) === 'EspadaV8\ClosureTable\Models\ClosureTable') {
             $table = $this->getTable() . '_closure';
             $this->closure->setTable($table);
         }
@@ -1145,11 +1145,11 @@ class Entity extends Eloquent implements EntityInterface
     {
         $parentId = (!$ancestor instanceof EntityInterface ? $ancestor : $ancestor->getKey());
 
-        if ($this->parent_id == $parentId && !is_null($this->parent_id)) {
+        if ($this->parent_id === $parentId && !is_null($this->parent_id)) {
             return $this;
         }
 
-        if ($this->getKey() == $parentId) {
+        if ($this->getKey() === $parentId) {
             throw new \InvalidArgumentException('Target entity is equal to the sender.');
         }
 
@@ -1214,7 +1214,7 @@ class Entity extends Eloquent implements EntityInterface
     protected function performUpdate(EloquentBuilder $query, array $options = [])
     {
         if (parent::performUpdate($query, $options)) {
-            if ($this->real_depth != $this->old_real_depth && $this->isMoved === true) {
+            if ($this->real_depth !== $this->old_real_depth && $this->isMoved === true) {
                 $action = ($this->real_depth > $this->old_real_depth ? 'increment' : 'decrement');
                 $amount = abs($this->real_depth - $this->old_real_depth);
 
@@ -1303,7 +1303,7 @@ class Entity extends Eloquent implements EntityInterface
             // TODO: There's probably a bug here where if you just created an entity and you set it to be
             // a root (parent_id = null) then it comes in here (while it should have gone in the else)
             // Reordering within the same ancestor
-            if ($this->old_parent_id !== false && $this->old_parent_id == $this->parent_id) {
+            if ($this->old_parent_id !== false && $this->old_parent_id === $this->parent_id) {
                 if ($this->position > $this->old_position) {
                     $range = [$this->old_position, $this->position];
                     $action = 'decrement';

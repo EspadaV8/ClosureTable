@@ -20,7 +20,7 @@ class QueryBuilder extends BaseQueryBuilder
      */
     public function buildWherePosition($column, array $values)
     {
-        if (count($values) == 1 || is_null($values[1])) {
+        if (count($values) === 1 || is_null($values[1])) {
             $this->where($column, '>=', $values[0]);
         } else {
             $this->whereIn($column, range($values[0], $values[1]));

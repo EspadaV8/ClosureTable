@@ -85,7 +85,7 @@ class Migration extends Generator
     {
         $timestamp = Carbon::now();
 
-        if (in_array($timestamp, $this->usedTimestamps)) {
+        if (in_array($timestamp, $this->usedTimestamps, true)) {
             $timestamp->addSecond();
         }
         $this->usedTimestamps[] = $timestamp;
