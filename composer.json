@@ -36,6 +36,9 @@
     "orchestra/testbench": "^3.1",
     "doctrine/dbal": "^2.5.1"
   },
+  "replace": {
+    "franzose/closure-table": "*"
+  },
   "autoload": {
     "psr-4": {
       "EspadaV8\\": "src/EspadaV8",
