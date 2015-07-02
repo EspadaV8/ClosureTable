@@ -15,9 +15,9 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * However, if you named, for example, the position column to be "pos",
  * remember you can get its value either by $this->pos or $this->position.
  *
- * @property int position Alias for the current position attribute name
- * @property int parent_id Alias for the direct ancestor identifier attribute name
- * @property int real_depth Alias for the real depth attribute name
+ * @property string position Alias for the current position attribute name
+ * @property string parent_id Alias for the direct ancestor identifier attribute name
+ * @property string real_depth Alias for the real depth attribute name
  *
  * @package EspadaV8\ClosureTable
  */
@@ -33,7 +33,7 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Cached "previous" (i.e. before the model is moved) direct ancestor id of this model.
      *
-     * @var int
+     * @var string
      */
     protected $old_parent_id;
 
@@ -114,7 +114,7 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Gets value of the "parent id" attribute.
      *
-     * @return int
+     * @return string
      */
     public function getParentIdAttribute()
     {
@@ -124,7 +124,7 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Sets new parent id and caches the old one.
      *
-     * @param int $value
+     * @param string $value
      */
     public function setParentIdAttribute($value)
     {
@@ -168,7 +168,7 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Sets new position and caches the old one.
      *
-     * @param int $value
+     * @param string $value
      */
     public function setPositionAttribute($value)
     {
@@ -176,7 +176,7 @@ class Entity extends Eloquent implements EntityInterface
             return;
         }
         $this->old_position = $this->position;
-        $this->attributes[$this->getPositionColumn()] = intval($value);
+        $this->attributes[$this->getPositionColumn()] = $value;
     }
 
     /**
@@ -220,7 +220,7 @@ class Entity extends Eloquent implements EntityInterface
             return;
         }
         $this->old_real_depth = $this->real_depth;
-        $this->attributes[$this->getRealDepthColumn()] = intval($value);
+        $this->attributes[$this->getRealDepthColumn()] = $value;
     }
 
     /**
@@ -485,10 +485,17 @@ class Entity extends Eloquent implements EntityInterface
      */
     protected function children($position = null, $order = 'asc')
     {
+        // This is a workaround for the EntityTestCase 'testIsParent'
+        // The model is never saved there so doesn't have a key
+        // The test case will be updated at some point
+        if ($this->getKey() === null) {
+            return $this->newQuery()->where('0', '=', '1');
+        }
+
         /**
          * @var QueryBuilder $query
          */
-        $query = $this->where($this->getParentIdColumn(), '=', (int)$this->getKey());
+        $query = $this->where($this->getParentIdColumn(), '=', $this->getKey());
 
         if (!is_null($position)) {
             if (is_array($position)) {
@@ -629,8 +636,8 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Retrieves children within given positions range.
      *
-     * @param int $from
-     * @param int $to
+     * @param string $from
+     * @param string|null $to
      * @param array $columns
      * @return Collection
      */
@@ -724,18 +731,13 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Removes model's children within a range of positions.
      *
-     * @param int $from
-     * @param int $to
-     * @param bool $forceDelete
+     * @param string      $from
+     * @param string|null $to
+     * @param bool        $forceDelete
      * @return $this
-     * @throws \InvalidArgumentException
      */
     public function removeChildren($from, $to = null, $forceDelete = false)
     {
-        if (!is_numeric($from) || (!is_null($to) && !is_numeric($to))) {
-            throw new \InvalidArgumentException('`from` and `to` are the position boundaries. They must be of type int.');
-        }
-
         if ($this->exists) {
             $action = ($forceDelete === true ? 'forceDelete' : 'delete');
 
@@ -749,8 +751,8 @@ class Entity extends Eloquent implements EntityInterface
      * Builds a part of the siblings query.
      *
      * @param string|int|array $direction
-     * @param int|bool $parentId
-     * @param string $order
+     * @param string|bool      $parentId
+     * @param string           $order
      * @return QueryBuilder
      */
     protected function siblings($direction = '', $parentId = false, $order = 'asc')
@@ -966,9 +968,9 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Retrieves siblings within given positions range.
      *
-     * @param int $from
-     * @param int $to
-     * @param array $columns
+     * @param mixed      $from
+     * @param mixed|null $to
+     * @param array      $columns
      * @return Collection
      */
     public function getSiblingsRange($from, $to = null, array $columns = ['*'])
@@ -1000,8 +1002,8 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Appends multiple siblings within the current depth.
      *
-     * @param array $siblings
-     * @param int|null $from
+     * @param array      $siblings
+     * @param mixed|null $from
      * @return $this
      */
     public function addSiblings(array $siblings, $from = null)
@@ -1230,7 +1232,7 @@ class Entity extends Eloquent implements EntityInterface
     /**
      * Gets the next sibling position after the last one at the given ancestor.
      *
-     * @param int|bool $parentId
+     * @param string|bool $parentId
      * @return int
      */
     public function getNextAfterLastPosition($parentId = false)

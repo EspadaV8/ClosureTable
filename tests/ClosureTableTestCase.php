@@ -37,7 +37,6 @@ class ClosureTableTestCase extends BaseTestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
      * @dataProvider insertNodeProvider
      */
     public function testInsertNodeValidatesItsArguments($ancestorId, $descendantId)
@@ -54,9 +53,6 @@ class ClosureTableTestCase extends BaseTestCase
         ];
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testMoveNodeToValidatesItsArgument()
     {
         $this->ctable->moveNodeTo('wrong');

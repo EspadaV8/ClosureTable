@@ -252,8 +252,8 @@ interface EntityInterface
     /**
      * Removes model's children within a range of positions.
      *
-     * @param int $from
-     * @param int $to
+     * @param string $from
+     * @param string|null $to
      * @param bool $forceDelete
      * @return $this
      * @throws \InvalidArgumentException
@@ -378,8 +378,8 @@ interface EntityInterface
     /**
      * Retrieves siblings within given positions range.
      *
-     * @param int $from
-     * @param int $to
+     * @param string $from
+     * @param string|null $to
      * @param array $columns
      * @return \EspadaV8\ClosureTable\Extensions\Collection
      */
@@ -399,7 +399,7 @@ interface EntityInterface
      * Appends multiple siblings within the current depth.
      *
      * @param array $siblings
-     * @param int|null $from
+     * @param string|null $from
      * @return mixed
      */
     public function addSiblings(array $siblings, $from = null);

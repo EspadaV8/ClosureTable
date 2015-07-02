@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 /**
  * Basic ClosureTable model. Performs actions on the relationships table.
  *
- * @property int ancestor Alias for the ancestor attribute name
- * @property int descendant Alias for the descendant attribute name
- * @property int depth Alias for the depth attribute name
+ * @property string ancestor Alias for the ancestor attribute name
+ * @property string descendant Alias for the descendant attribute name
+ * @property string depth Alias for the depth attribute name
  *
  * @package EspadaV8\ClosureTable
  */
@@ -41,17 +41,12 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
     /**
      * Inserts new node into closure table.
      *
-     * @param int $ancestorId
-     * @param int $descendantId
+     * @param string $ancestorId
+     * @param string $descendantId
      * @return void
-     * @throws \InvalidArgumentException
      */
     public function insertNode($ancestorId, $descendantId)
     {
-        if (!is_numeric($ancestorId) || !is_numeric($descendantId)) {
-            throw new \InvalidArgumentException('`ancestorId` and `descendantId` arguments must be of type int.');
-        }
-
         $table = $this->getPrefixedTable();
         $ancestor = $this->getAncestorColumn();
         $descendant = $this->getDescendantColumn();
@@ -79,16 +74,11 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
     /**
      * Make a node a descendant of another ancestor or makes it a root node.
      *
-     * @param int $ancestorId
+     * @param string|null $ancestorId
      * @return void
-     * @throws \InvalidArgumentException
      */
     public function moveNodeTo($ancestorId = null)
     {
-        if (!is_null($ancestorId) && !is_numeric($ancestorId)) {
-            throw new \InvalidArgumentException('`ancestor` argument must be of type int.');
-        }
-
         $table = $this->getPrefixedTable();
         $ancestor = $this->getAncestorColumn();
         $descendant = $this->getDescendantColumn();
@@ -179,7 +169,7 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
     /**
      * Get value of the "ancestor" attribute.
      *
-     * @return int
+     * @return string
      */
     public function getAncestorAttribute()
     {
@@ -193,7 +183,7 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
      */
     public function setAncestorAttribute($value)
     {
-        $this->attributes[$this->getAncestorColumn()] = intval($value);
+        $this->attributes[$this->getAncestorColumn()] = $value;
     }
 
     /**
@@ -219,7 +209,7 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
     /**
      * Get value of the "descendant" attribute.
      *
-     * @return int
+     * @return string
      */
     public function getDescendantAttribute()
     {
@@ -233,7 +223,7 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
      */
     public function setDescendantAttribute($value)
     {
-        $this->attributes[$this->getDescendantColumn()] = intval($value);
+        $this->attributes[$this->getDescendantColumn()] = $value;
     }
 
     /**

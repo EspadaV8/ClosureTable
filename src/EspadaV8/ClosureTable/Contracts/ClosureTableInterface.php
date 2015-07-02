@@ -33,8 +33,8 @@ interface ClosureTableInterface
     /**
      * Inserts new node into closure table.
      *
-     * @param int $ancestorId
-     * @param int $descendantId
+     * @param string $ancestorId
+     * @param string $descendantId
      * @return mixed
      * @throws \InvalidArgumentException
      */
@@ -43,7 +43,7 @@ interface ClosureTableInterface
     /**
      * Make a node a descendant of another ancestor or makes it a root node.
      *
-     * @param int $ancestorId
+     * @param string $ancestorId
      * @return mixed
      * @throws \InvalidArgumentException
      */
