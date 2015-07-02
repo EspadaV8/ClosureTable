@@ -5,6 +5,7 @@ namespace EspadaV8\ClosureTable\Models;
 use DB;
 use EspadaV8\ClosureTable\Contracts\ClosureTableInterface;
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Query\Expression;
 
 /**
  * Basic ClosureTable model. Performs actions on the relationships table.
@@ -104,21 +105,30 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
             return;
         }
 
-        $query = "
-            INSERT INTO {$table} ({$ancestor}, {$descendant}, {$depth})
-            SELECT supertbl.{$ancestor}, subtbl.{$descendant}, supertbl.{$depth}+subtbl.{$depth}+1
-            FROM {$table} as supertbl
-            CROSS JOIN {$table} as subtbl
-            WHERE supertbl.{$descendant} = ?
-            AND subtbl.{$ancestor} = ?
-        ";
+        DB::beginTransaction();
 
-        $bindings = [
-            $ancestorId,
-            $thisDescendantId,
-        ];
+        $details = DB::table($table)
+            ->join($table . ' as t', new Expression(1), '=', new Expression(1))
+            ->select(
+                $table . '.' . $ancestor, 't.' . $descendant,
+                $table . '.' . $depth . ' as d',
+                't.' . $depth
+            )
+            ->where($table . '.' . $descendant, '=', $ancestorId)
+            ->where('t.' . $ancestor, '=', $thisDescendantId)
+            ->get()
+        ;
 
-        DB::statement($query, $bindings);
+
+        foreach ($details as $row) {
+            $instance = new static;
+            $instance->{$ancestor} = $row->ancestor;
+            $instance->{$descendant} = $row->descendant;
+            $instance->{$depth} = $row->d + $row->depth + 1;
+            $instance->save();
+        }
+
+        DB::commit();
     }
 
     /**
