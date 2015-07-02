@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @package EspadaV8\ClosureTable
  */
-class Entity extends Eloquent implements EntityInterface
+abstract class Entity extends Eloquent implements EntityInterface
 {
     /**
      * ClosureTable model instance.
@@ -52,27 +52,11 @@ class Entity extends Eloquent implements EntityInterface
     protected $old_real_depth;
 
     /**
-     * Indicates if the model should soft delete.
-     *
-     * @var bool
-     */
-    protected $softDelete = true;
-
-    /**
      * Indicates if the model is being moved to another ancestor.
      *
      * @var bool
      */
     protected $isMoved = false;
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    public static $debug = false;
 
     /**
      * Entity constructor.

@@ -16,7 +16,7 @@ use Illuminate\Database\Query\Expression;
  *
  * @package EspadaV8\ClosureTable
  */
-class ClosureTable extends Eloquent implements ClosureTableInterface
+abstract class ClosureTable extends Eloquent implements ClosureTableInterface
 {
     /**
      * The table associated with the model.
@@ -31,13 +31,6 @@ class ClosureTable extends Eloquent implements ClosureTableInterface
      * @var string
      */
     protected $primaryKey = 'closure_id';
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * Inserts new node into closure table.

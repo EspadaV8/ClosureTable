@@ -3,9 +3,8 @@
 namespace EspadaVTest\ClosureTable;
 
 use DB;
-use EspadaV8\ClosureTable\Models\ClosureTable;
-use EspadaV8\ClosureTable\Models\Entity;
 use EspadaVTest\ClosureTable\Models\Page;
+use EspadaVTest\ClosureTable\Models\PageClosure;
 use Mockery;
 
 class EntityTestCase extends BaseTestCase
@@ -13,7 +12,7 @@ class EntityTestCase extends BaseTestCase
     /**
      * Tested entity.
      *
-     * @var Entity;
+     * @var Page;
      */
     protected $entity;
 
@@ -39,13 +38,12 @@ class EntityTestCase extends BaseTestCase
 
         // TODO: Remove this when Laravel fixes the issue with model booting in tests
         if (self::$force_boot) {
-            Entity::boot();
             Page::boot();
         } else {
             self::$force_boot = true;
         }
 
-        $this->entity = new Entity;
+        $this->entity = new Page;
         $this->entity->fillable(['title', 'excerpt', 'body', 'position', 'real_depth']);
 
         $this->childrenRelationIndex = $this->entity->getChildrenRelationIndex();
@@ -79,20 +77,20 @@ class EntityTestCase extends BaseTestCase
     public function testIsRoot()
     {
         $this->assertFalse($this->entity->isRoot());
-        $this->assertTrue(Entity::find(1)->isRoot());
+        $this->assertTrue(Page::find(1)->isRoot());
     }
 
     public function testCreate()
     {
-        ClosureTable::truncate();
-        Entity::truncate();
+        PageClosure::truncate();
+        Page::truncate();
 
-        $entity1 = new Entity;
+        $entity1 = new Page;
         $entity1->save();
 
         $this->assertEquals(0, $entity1->position);
 
-        $entity2 = new Entity;
+        $entity2 = new Page;
         $entity2->save();
         $this->assertEquals(1, $entity2->position);
     }
@@ -152,7 +150,7 @@ class EntityTestCase extends BaseTestCase
         $entity2->save();
 
         $this->assertEquals(10, $entity2->position);
-        $this->assertEquals(9, Entity::find($id)->position);
+        $this->assertEquals(9, Page::find($id)->position);
     }
 
     public function testCreateSetsRealDepth()
@@ -196,7 +194,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testMoveTo()
     {
-        $ancestor = Entity::find(1);
+        $ancestor = Page::find(1);
         $result = $this->entity->moveTo(0, $ancestor);
 
         $this->assertSame($this->entity, $result);
@@ -207,8 +205,8 @@ class EntityTestCase extends BaseTestCase
 
     public function testClampPosition()
     {
-        $ancestor = Entity::find(9);
-        $entity = Entity::find(15);
+        $ancestor = Page::find(9);
+        $entity = Page::find(15);
         $entity->position = -1;
         $entity->save();
 
@@ -222,26 +220,26 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetParent()
     {
-        $entity = Entity::find(10);
+        $entity = Page::find(10);
         $parent = $entity->getParent();
 
-        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $parent);
+        $this->assertInstanceOf(\EspadaVTest\ClosureTable\Models\Page::class, $parent);
         $this->assertEquals(9, $parent->getKey());
     }
 
     public function testGetParentAfterMovingToAnAncestor()
     {
-        $entity = Entity::find(10);
+        $entity = Page::find(10);
         $entity->moveTo(0, 15);
         $parent = $entity->getParent();
 
-        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $parent);
+        $this->assertInstanceOf(\EspadaVTest\ClosureTable\Models\Page::class, $parent);
         $this->assertEquals(15, $parent->getKey());
     }
 
     public function testGetAncestors()
     {
-        $entity = Entity::find(12);
+        $entity = Page::find(12);
         $ancestors = $entity->getAncestors();
 
         $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $ancestors);
@@ -251,7 +249,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetAncestorsWhere()
     {
-        $entity = Entity::find(12);
+        $entity = Page::find(12);
         $ancestors = $entity->getAncestorsWhere('excerpt', '=', '');
 
         $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $ancestors);
@@ -264,7 +262,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testCountAncestors()
     {
-        $entity = Entity::find(12);
+        $entity = Page::find(12);
         $ancestors = $entity->countAncestors();
 
         $this->assertEquals(3, $ancestors);
@@ -272,7 +270,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testHasAncestors()
     {
-        $entity = Entity::find(12);
+        $entity = Page::find(12);
         $hasAncestors = $entity->hasAncestors();
 
         $this->assertTrue($hasAncestors);
@@ -280,7 +278,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetDescendants()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $descendants = $entity->getDescendants();
 
         $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $descendants);
@@ -290,7 +288,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetDescendantsWhere()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
 
         $descendants = $entity->getDescendantsWhere($this->entity->getPositionColumn(), '=', 1);
         $this->assertCount(1, $descendants);
@@ -299,7 +297,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testCountDescendants()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $descendants = $entity->countDescendants();
 
         $this->assertEquals(6, $descendants);
@@ -307,7 +305,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testHasDescendants()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $hasDescendants = $entity->hasDescendants();
 
         $this->assertTrue($hasDescendants);
@@ -315,7 +313,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetChildren()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $children = $entity->getChildren();
 
         $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $children);
@@ -325,7 +323,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testCountChildren()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $children = $entity->countChildren();
 
         $this->assertEquals(4, $children);
@@ -333,34 +331,34 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetChildAt()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $child = $entity->getChildAt(2);
 
-        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $child);
+        $this->assertInstanceOf(\EspadaVTest\ClosureTable\Models\Page::class, $child);
         $this->assertEquals(2, $child->position);
     }
 
     public function testGetFirstChild()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $child = $entity->getFirstChild();
 
-        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $child);
+        $this->assertInstanceOf(\EspadaVTest\ClosureTable\Models\Page::class, $child);
         $this->assertEquals(0, $child->position);
     }
 
     public function testGetLastChild()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $child = $entity->getLastChild();
 
-        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $child);
+        $this->assertInstanceOf(\EspadaVTest\ClosureTable\Models\Page::class, $child);
         $this->assertEquals(3, $child->position);
     }
 
     public function testGetChildrenRange()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $children = $entity->getChildrenRange(0, 2);
 
         $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $children);
@@ -378,8 +376,8 @@ class EntityTestCase extends BaseTestCase
 
     public function testAddChildWithPosition()
     {
-        $entity = Entity::find(15);
-        $newone = new Entity;
+        $entity = Page::find(15);
+        $newone = new Page;
         $result = $entity->addChild($newone, 0);
 
         $this->assertEquals(0, $newone->position);
@@ -389,8 +387,8 @@ class EntityTestCase extends BaseTestCase
 
     public function testAddChildWithoutPosition()
     {
-        $entity = Entity::find(9);
-        $newone = new Entity;
+        $entity = Page::find(9);
+        $newone = new Page;
         $result = $entity->addChild($newone);
 
         $this->assertEquals(4, $newone->position);
@@ -400,10 +398,10 @@ class EntityTestCase extends BaseTestCase
 
     public function testAddChildren()
     {
-        $entity = Entity::find(15);
-        $child1 = new Entity;
-        $child2 = new Entity;
-        $child3 = new Entity;
+        $entity = Page::find(15);
+        $child1 = new Page;
+        $child2 = new Page;
+        $child3 = new Page;
 
         $result = $entity->addChildren([$child1, $child2, $child3]);
 
@@ -417,10 +415,10 @@ class EntityTestCase extends BaseTestCase
 
     public function testRemoveChild()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $entity->removeChild(0);
 
-        $child = Entity::find(10);
+        $child = Page::find(10);
 
         $this->assertNull($child);
         $this->assertEquals(3, $entity->countChildren());
@@ -428,7 +426,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testRemoveChildren()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $entity->removeChildren(0, 1);
 
         $this->assertEquals(2, $entity->countChildren());
@@ -436,16 +434,16 @@ class EntityTestCase extends BaseTestCase
 
     public function testRemoveChildrenToTheEnd()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $entity->removeChildren(1);
 
-        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $entity->getFirstChild());
+        $this->assertInstanceOf(\EspadaVTest\ClosureTable\Models\Page::class, $entity->getFirstChild());
         $this->assertEquals(1, $entity->countChildren());
     }
 
     public function testGetSiblings()
     {
-        $entity = Entity::find(13);
+        $entity = Page::find(13);
         $siblings = $entity->getSiblings();
 
         $this->assertInstanceOf('EspadaV8\ClosureTable\Extensions\Collection', $siblings);
@@ -457,7 +455,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testsCountSiblings()
     {
-        $entity = Entity::find(13);
+        $entity = Page::find(13);
         $number = $entity->countSiblings();
 
         $this->assertEquals(3, $number);
@@ -465,7 +463,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testsHasSiblings()
     {
-        $entity = Entity::find(13);
+        $entity = Page::find(13);
         $hasSiblings = $entity->hasSiblings();
 
         $this->assertTrue($hasSiblings);
@@ -473,7 +471,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testsGetNeighbors()
     {
-        $entity = Entity::find(13);
+        $entity = Page::find(13);
         $neighbors = $entity->getNeighbors();
 
         $this->assertCount(2, $neighbors);
@@ -483,7 +481,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testsGetSiblingAt()
     {
-        $entity = Entity::find(13);
+        $entity = Page::find(13);
         $sibling = $entity->getSiblingAt(0);
 
         $this->assertEquals(10, $sibling->getKey());
@@ -495,7 +493,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetFirstSibling()
     {
-        $entity = Entity::find(13);
+        $entity = Page::find(13);
         $sibling = $entity->getFirstSibling();
 
         $this->assertEquals(10, $sibling->getKey());
@@ -503,7 +501,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetLastSibling()
     {
-        $entity = Entity::find(13);
+        $entity = Page::find(13);
         $sibling = $entity->getLastSibling();
 
         $this->assertEquals(15, $sibling->getKey());
@@ -511,7 +509,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetPrevSibling()
     {
-        $entity = Entity::find(15);
+        $entity = Page::find(15);
         $sibling = $entity->getPrevSibling();
 
         $this->assertEquals(14, $sibling->getKey());
@@ -519,7 +517,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetPrevSiblings()
     {
-        $entity = Entity::find(15);
+        $entity = Page::find(15);
         $siblings = $entity->getPrevSiblings();
 
         $this->assertCount(3, $siblings);
@@ -530,7 +528,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testsCountPrevSiblings()
     {
-        $entity = Entity::find(15);
+        $entity = Page::find(15);
         $siblings = $entity->countPrevSiblings();
 
         $this->assertEquals(3, $siblings);
@@ -538,7 +536,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testsHasPrevSiblings()
     {
-        $entity = Entity::find(15);
+        $entity = Page::find(15);
         $hasPrevSiblings = $entity->hasPrevSiblings();
 
         $this->assertTrue($hasPrevSiblings);
@@ -546,7 +544,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetNextSibling()
     {
-        $entity = Entity::find(10);
+        $entity = Page::find(10);
         $sibling = $entity->getNextSibling();
 
         $this->assertEquals(13, $sibling->getKey());
@@ -554,7 +552,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetNextSiblings()
     {
-        $entity = Entity::find(10);
+        $entity = Page::find(10);
         $siblings = $entity->getNextSiblings();
 
         $this->assertCount(3, $siblings);
@@ -565,7 +563,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testCountNextSiblings()
     {
-        $entity = Entity::find(10);
+        $entity = Page::find(10);
         $siblings = $entity->countNextSiblings();
 
         $this->assertEquals(3, $siblings);
@@ -573,7 +571,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testsHasNextSiblings()
     {
-        $entity = Entity::find(10);
+        $entity = Page::find(10);
         $hasNextSiblings = $entity->hasNextSiblings();
 
         $this->assertTrue($hasNextSiblings);
@@ -581,7 +579,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetSiblingsRange()
     {
-        $entity = Entity::find(15);
+        $entity = Page::find(15);
         $siblings = $entity->getSiblingsRange(1, 2);
 
         $this->assertCount(2, $siblings);
@@ -591,19 +589,19 @@ class EntityTestCase extends BaseTestCase
 
     public function testAddSibling()
     {
-        $entity = Entity::find(15);
-        $entity->addSibling(new Entity);
+        $entity = Page::find(15);
+        $entity->addSibling(new Page);
 
         $sibling = $entity->getNextSibling();
 
-        $this->assertInstanceOf('EspadaV8\ClosureTable\Models\Entity', $sibling);
+        $this->assertInstanceOf(\EspadaVTest\ClosureTable\Models\Page::class, $sibling);
         $this->assertEquals(4, $sibling->position);
     }
 
     public function testAddSiblings()
     {
-        $entity = Entity::find(15);
-        $entity->addSiblings([new Entity, new Entity, new Entity]);
+        $entity = Page::find(15);
+        $entity->addSiblings([new Page, new Page, new Page]);
 
         $siblings = $entity->getNextSiblings();
 
@@ -615,9 +613,9 @@ class EntityTestCase extends BaseTestCase
 
     public function testAddSiblingsFromPosition()
     {
-        $entity = Entity::find(15);
+        $entity = Page::find(15);
 
-        $entity->addSiblings([new Entity, new Entity, new Entity, new Entity], 1);
+        $entity->addSiblings([new Page, new Page, new Page, new Page], 1);
 
         $siblings = $entity->getSiblingsRange(1, 4);
 
@@ -629,7 +627,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetRoots()
     {
-        $roots = Entity::getRoots();
+        $roots = Page::getRoots();
 
         $this->assertCount(9, $roots);
 
@@ -640,7 +638,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetTree()
     {
-        $tree = Entity::getTree();
+        $tree = Page::getTree();
 
         $this->assertCount(9, $tree);
 
@@ -654,7 +652,7 @@ class EntityTestCase extends BaseTestCase
 
     public function testGetTreeWhere()
     {
-        $tree = Entity::getTreeWhere($this->entity->getPositionColumn(), '>=', 1, [
+        $tree = Page::getTreeWhere($this->entity->getPositionColumn(), '>=', 1, [
             $this->entity->getKeyName(),
             $this->entity->getPositionColumn()
         ]);
@@ -674,55 +672,55 @@ class EntityTestCase extends BaseTestCase
 
     public function testDeleteSubtree()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $entity->deleteSubtree();
 
-        $this->assertEquals(1, Entity::whereBetween('id', [9, 15])->count());
-        $this->assertEquals(8, Entity::whereBetween('id', [1, 8])->count());
+        $this->assertEquals(1, Page::whereBetween('id', [9, 15])->count());
+        $this->assertEquals(8, Page::whereBetween('id', [1, 8])->count());
     }
 
     public function testDeleteSubtreeWithAncestor()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $entity->deleteSubtree(true);
 
-        $this->assertEquals(0, Entity::whereBetween('id', [9, 15])->count());
-        $this->assertEquals(8, Entity::whereBetween('id', [1, 8])->count());
+        $this->assertEquals(0, Page::whereBetween('id', [9, 15])->count());
+        $this->assertEquals(8, Page::whereBetween('id', [1, 8])->count());
     }
 
     public function testForceDeleteSubtree()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $entity->deleteSubtree(false, true);
 
-        $this->assertEquals(1, Entity::whereBetween('id', [9, 15])->count());
-        $this->assertEquals(1, ClosureTable::whereBetween('ancestor', [9, 15])->count());
+        $this->assertEquals(1, Page::whereBetween('id', [9, 15])->count());
+        $this->assertEquals(1, PageClosure::whereBetween('ancestor', [9, 15])->count());
     }
 
     public function testForceDeleteDeepSubtree()
     {
-        Entity::find(9)->moveTo(0, 8);
-        Entity::find(8)->moveTo(0, 7);
-        Entity::find(7)->moveTo(0, 6);
-        Entity::find(6)->moveTo(0, 5);
-        Entity::find(5)->moveTo(0, 4);
-        Entity::find(4)->moveTo(0, 3);
-        Entity::find(3)->moveTo(0, 2);
-        Entity::find(2)->moveTo(0, 1);
+        Page::find(9)->moveTo(0, 8);
+        Page::find(8)->moveTo(0, 7);
+        Page::find(7)->moveTo(0, 6);
+        Page::find(6)->moveTo(0, 5);
+        Page::find(5)->moveTo(0, 4);
+        Page::find(4)->moveTo(0, 3);
+        Page::find(3)->moveTo(0, 2);
+        Page::find(2)->moveTo(0, 1);
 
-        Entity::find(1)->deleteSubtree(false, true);
+        Page::find(1)->deleteSubtree(false, true);
 
-        $this->assertEquals(1, Entity::whereBetween('id', [1, 9])->count());
-        $this->assertEquals(1, ClosureTable::whereBetween('ancestor', [1, 9])->count());
+        $this->assertEquals(1, Page::whereBetween('id', [1, 9])->count());
+        $this->assertEquals(1, PageClosure::whereBetween('ancestor', [1, 9])->count());
     }
 
     public function testForceDeleteSubtreeWithSelf()
     {
-        $entity = Entity::find(9);
+        $entity = Page::find(9);
         $entity->deleteSubtree(true, true);
 
-        $this->assertEquals(0, Entity::whereBetween('id', [9, 15])->count());
-        $this->assertEquals(0, ClosureTable::whereBetween('ancestor', [9, 15])->count());
+        $this->assertEquals(0, Page::whereBetween('id', [9, 15])->count());
+        $this->assertEquals(0, PageClosure::whereBetween('ancestor', [9, 15])->count());
     }
 
     public function testCreateFromArray()
@@ -832,8 +830,8 @@ class EntityTestCase extends BaseTestCase
 
     public function testInsertNode()
     {
-        $entity = Entity::create(['title' => 'abcde']);
-        $closure = ClosureTable::whereDescendant($entity->getKey())->first();
+        $entity = Page::create(['title' => 'abcde']);
+        $closure = PageClosure::whereDescendant($entity->getKey())->first();
 
         $this->assertNotNull($closure);
         $this->assertEquals($entity->getKey(), $closure->ancestor);
@@ -842,11 +840,11 @@ class EntityTestCase extends BaseTestCase
 
     public function testInsertedNodeDepth()
     {
-        $entity = Entity::create(['title' => 'abcde']);
-        $child = Entity::create(['title' => 'abcde']);
+        $entity = Page::create(['title' => 'abcde']);
+        $child = Page::create(['title' => 'abcde']);
         $child->moveTo(0, $entity);
 
-        $closure = ClosureTable::whereDescendant($child->getKey())
+        $closure = PageClosure::whereDescendant($child->getKey())
             ->whereAncestor($entity->getKey())->first();
 
         $this->assertNotNull($closure);
@@ -855,12 +853,12 @@ class EntityTestCase extends BaseTestCase
 
     public function testValidNumberOfRowsInsertedByInsertNode()
     {
-        $ancestor = Entity::create(['title' => 'abcde']);
-        $descendant = Entity::create(['title' => 'abcde']);
+        $ancestor = Page::create(['title' => 'abcde']);
+        $descendant = Page::create(['title' => 'abcde']);
         $descendant->moveTo(0, $ancestor);
 
-        $ancestorRows = ClosureTable::whereDescendant($ancestor->getKey())->count();
-        $descendantRows = ClosureTable::whereDescendant($descendant->getKey())->count();
+        $ancestorRows = PageClosure::whereDescendant($ancestor->getKey())->count();
+        $descendantRows = PageClosure::whereDescendant($descendant->getKey())->count();
 
         $this->assertEquals(1, $ancestorRows);
         $this->assertEquals(2, $descendantRows);
@@ -868,11 +866,11 @@ class EntityTestCase extends BaseTestCase
 
     public function testMoveNodeToAnotherAncestor()
     {
-        $descendant = Entity::find(1);
+        $descendant = Page::find(1);
         $descendant->moveTo(0, 2);
 
-        $ancestors = ClosureTable::whereDescendant(2)->count();
-        $descendants = ClosureTable::whereDescendant(1)->count();
+        $ancestors = PageClosure::whereDescendant(2)->count();
+        $descendants = PageClosure::whereDescendant(1)->count();
 
         $this->assertEquals(1, $ancestors);
         $this->assertEquals(2, $descendants);
@@ -880,20 +878,20 @@ class EntityTestCase extends BaseTestCase
 
     public function testMoveNodeToDeepNesting()
     {
-        $item = Entity::find(1);
+        $item = Page::find(1);
         $item->moveTo(0, 2);
 
-        $item = Entity::find(2);
+        $item = Page::find(2);
         $item->moveTo(0, 3);
 
-        $item = Entity::find(3);
+        $item = Page::find(3);
         $item->moveTo(0, 4);
 
-        $item = Entity::find(4);
+        $item = Page::find(4);
         $item->moveTo(0, 5);
 
-        $descendantRows = ClosureTable::whereDescendant(1)->count();
-        $ancestorRows = ClosureTable::whereDescendant(2)->count();
+        $descendantRows = PageClosure::whereDescendant(1)->count();
+        $ancestorRows = PageClosure::whereDescendant(2)->count();
 
         $this->assertEquals(4, $ancestorRows);
         $this->assertEquals(5, $descendantRows);
@@ -901,21 +899,21 @@ class EntityTestCase extends BaseTestCase
 
     public function testMoveNodeToBecomeRoot()
     {
-        $item = Entity::find(1);
+        $item = Page::find(1);
         $item->moveTo(0, 2);
 
-        $item = Entity::find(2);
+        $item = Page::find(2);
         $item->moveTo(0, 3);
 
-        $item = Entity::find(3);
+        $item = Page::find(3);
         $item->moveTo(0, 4);
 
-        $item = Entity::find(4);
+        $item = Page::find(4);
         $item->moveTo(0, 5);
 
-        $item = Entity::find(1);
+        $item = Page::find(1);
         $item->moveTo(0);
 
-        $this->assertEquals(1, ClosureTable::whereDescendant(1)->count());
+        $this->assertEquals(1, PageClosure::whereDescendant(1)->count());
     }
 }

@@ -3,17 +3,17 @@
 namespace EspadaVTest\ClosureTable;
 
 use EspadaV8\ClosureTable\Extensions\Collection;
-use EspadaV8\ClosureTable\Models\Entity;
+use EspadaVTest\ClosureTable\Models\Page;
 use Mockery;
 
 class CollectionTestCase extends BaseTestCase
 {
     public function testToTree()
     {
-        $rootEntity = new Entity;
+        $rootEntity = new Page;
         $rootEntity->save();
-        $childEntity = with(new Entity)->moveTo(0, $rootEntity);
-        $grandEntity = with(new Entity)->moveTo(0, $childEntity);
+        $childEntity = with(new Page)->moveTo(0, $rootEntity);
+        $grandEntity = with(new Page)->moveTo(0, $childEntity);
 
         $childrenRelationIndex = $rootEntity->getChildrenRelationIndex();
 
@@ -43,22 +43,22 @@ class CollectionTestCase extends BaseTestCase
 
     public function testHasChildren()
     {
-        $entity = new Entity;
+        $entity = new Page;
         $childrenRelationIndex = $entity->getChildrenRelationIndex();
 
-        $collection = new Collection([$entity, new Entity, new Entity]);
-        $collection->get(0)->setRelation($childrenRelationIndex, new Collection([new Entity, new Entity, new Entity]));
+        $collection = new Collection([$entity, new Page, new Page]);
+        $collection->get(0)->setRelation($childrenRelationIndex, new Collection([new Page, new Page, new Page]));
 
         $this->assertTrue($collection->hasChildren(0));
     }
 
     public function testGetChildrenOf()
     {
-        $entity = new Entity;
+        $entity = new Page;
         $childrenRelationIndex = $entity->getChildrenRelationIndex();
 
-        $collection = new Collection([$entity, new Entity, new Entity]);
-        $collection->get(0)->setRelation($childrenRelationIndex, new Collection([new Entity, new Entity, new Entity]));
+        $collection = new Collection([$entity, new Page, new Page]);
+        $collection->get(0)->setRelation($childrenRelationIndex, new Collection([new Page, new Page, new Page]));
 
         $children = $collection->getChildrenOf(0);
 

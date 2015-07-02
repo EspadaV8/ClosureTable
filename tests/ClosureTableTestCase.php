@@ -2,12 +2,12 @@
 
 namespace EspadaVTest\ClosureTable;
 
-use EspadaV8\ClosureTable\Models\ClosureTable;
+use EspadaVTest\ClosureTable\Models\PageClosure;
 
 class ClosureTableTestCase extends BaseTestCase
 {
     /**
-     * @var ClosureTable;
+     * @var PageClosure;
      */
     protected $ctable;
 
@@ -30,7 +30,7 @@ class ClosureTableTestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->ctable = new ClosureTable;
+        $this->ctable = new PageClosure;
         $this->ancestorColumn = $this->ctable->getAncestorColumn();
         $this->descendantColumn = $this->ctable->getDescendantColumn();
         $this->depthColumn = $this->ctable->getDepthColumn();
