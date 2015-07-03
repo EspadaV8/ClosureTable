@@ -62,6 +62,34 @@ Remember that many things are made customizable, so see ‘<a href="#customizati
 ## Time of coding
 Once your models and their database tables are created, at last, you can start actually coding. Here I will show you ClosureTable's specific approaches.
 
+### Extend vs traits
+
+Previously you were required to extend the ClosureTable `Entity` class.
+
+```php
+<?php
+
+use EspadaV8\ClosureTable\Models\Entity;
+
+class Page extends Entity
+{
+}
+```
+
+There is now a trait that can be used instead of using the class
+
+```php
+<?php
+
+use EspadaV8\ClosureTable\Traits\EntityTrait as ClosureEntity;
+use Illuminate\Database\Eloquent\Model;
+
+class Page extends Model
+{
+    use ClosureEntity;
+}
+```
+
 ### Direct ancestor (parent)
 
 ```php
