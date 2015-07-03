@@ -1,7 +1,7 @@
 # ClosureTable
-[![Build Status](https://travis-ci.org/espadav8/ClosureTable.png)](https://travis-ci.org/espadav8/ClosureTable)
-[![Latest Stable Version](https://poser.pugx.org/espadav8/closure-table/v/stable.png)](https://packagist.org/packages/espadav8/closure-table)
-[![Total Downloads](https://poser.pugx.org/espadav8/closure-table/downloads.png)](https://packagist.org/packages/espadav8/closure-table)
+[![Build Status](https://api.travis-ci.org/EspadaV8/ClosureTable.png)](https://travis-ci.org/EspadaV8/ClosureTable)
+[![Latest Stable Version](https://poser.pugx.org/espadav8/closure-table/v/stable)](https://packagist.org/packages/espadav8/closure-table)
+[![Total Downloads](https://poser.pugx.org/espadav8/closure-table/downloads)](https://packagist.org/packages/espadav8/closure-table)
 
 ## NOTE: Master branch is now for Laravel 5.<br>If you use Laravel 4, please see L4 branch!
 
