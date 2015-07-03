@@ -131,35 +131,33 @@ abstract class ClosureTable extends Eloquent implements ClosureTableInterface
      */
     protected function unbindRelationships()
     {
-        $table = $this->getPrefixedTable();
+        if ($this->descendant === null) {
+            return;
+        }
+
         $ancestorColumn = $this->getAncestorColumn();
         $descendantColumn = $this->getDescendantColumn();
         $descendant = $this->descendant;
 
-        $query = "
-            DELETE FROM {$table}
-            WHERE {$descendantColumn} IN (
-              SELECT d FROM (
-                SELECT {$descendantColumn} as d FROM {$table}
-                WHERE {$ancestorColumn} = ?
-              ) as dct
-            )
-            AND {$ancestorColumn} IN (
-              SELECT a FROM (
-                SELECT {$ancestorColumn} AS a FROM {$table}
-                WHERE {$descendantColumn} = ?
-                AND {$ancestorColumn} <> ?
-              ) as ct
-            )
-        ";
+        DB::beginTransaction();
 
-        $bindings = [
-            $descendant,
-            $descendant,
-            $descendant,
-        ];
+        $one = $this->newQuery()
+            ->select($descendantColumn)
+            ->where($ancestorColumn, '=', $descendant)
+            ->lists($descendantColumn);
 
-        DB::delete($query, $bindings);
+        $two = $this->newQuery()
+            ->select($ancestorColumn)
+            ->where($descendantColumn, '=', $descendant)
+            ->where($ancestorColumn, '<>', $descendant)
+            ->lists($ancestorColumn);
+
+        $this->newQuery()
+            ->whereIn($descendantColumn, $one)
+            ->whereIn($ancestorColumn, $two)
+            ->delete();
+
+        DB::commit();
     }
 
     /**
