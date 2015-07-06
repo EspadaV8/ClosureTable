@@ -33,6 +33,27 @@ abstract class ClosureTable extends Eloquent implements ClosureTableInterface
     protected $primaryKey = 'closure_id';
 
     /**
+     * The column name for the models ancestor id.
+     *
+     * @var string
+     */
+    protected $ancestorColumn = 'ancestor';
+
+    /**
+     * The column name for the models descendant id.
+     *
+     * @var string
+     */
+    protected $descendantColumn = 'descendant';
+
+    /**
+     * The column name for the models depth field.
+     *
+     * @var string
+     */
+    protected $depthColumn = 'depth';
+
+    /**
      * Inserts new node into closure table.
      *
      * @param string $ancestorId
@@ -207,7 +228,7 @@ abstract class ClosureTable extends Eloquent implements ClosureTableInterface
      */
     public function getAncestorColumn()
     {
-        return 'ancestor';
+        return $this->ancestorColumn;
     }
 
     /**
@@ -247,7 +268,7 @@ abstract class ClosureTable extends Eloquent implements ClosureTableInterface
      */
     public function getDescendantColumn()
     {
-        return 'descendant';
+        return $this->descendantColumn;
     }
 
     /**
@@ -287,6 +308,6 @@ abstract class ClosureTable extends Eloquent implements ClosureTableInterface
      */
     public function getDepthColumn()
     {
-        return 'depth';
+        return $this->depthColumn;
     }
 }
