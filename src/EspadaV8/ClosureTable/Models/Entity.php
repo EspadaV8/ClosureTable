@@ -1082,7 +1082,7 @@ abstract class Entity extends Eloquent implements EntityInterface
          */
         $instance = new static;
 
-        return $instance->orderBy('parent_id')->orderBy($instance->getPositionColumn())
+        return $instance->orderBy($instance->getParentIdColumn())->orderBy($instance->getPositionColumn())
             ->get($instance->prepareTreeQueryColumns($columns))->toTree();
     }
 
