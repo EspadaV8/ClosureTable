@@ -59,6 +59,27 @@ abstract class Entity extends Eloquent implements EntityInterface
     protected $isMoved = false;
 
     /**
+     * The column name for the models parent id.
+     *
+     * @var string
+     */
+    protected $parentIdColumn = 'parent_id';
+
+    /**
+     * The column name for the models real depth field.
+     *
+     * @var string
+     */
+    protected $realDepthColumn = 'real_depth';
+
+    /**
+     * The column name for the models position field.
+     *
+     * @var string
+     */
+    protected $positionColumn = 'position';
+
+    /**
      * Entity constructor.
      *
      * @param array $attributes
@@ -136,7 +157,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function getParentIdColumn()
     {
-        return 'parent_id';
+        return $this->parentIdColumn;
     }
 
     /**
@@ -180,7 +201,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function getPositionColumn()
     {
-        return 'position';
+        return $this->positionColumn;
     }
 
     /**
@@ -224,7 +245,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function getRealDepthColumn()
     {
-        return 'real_depth';
+        return $this->realDepthColumn;
     }
 
     /**
@@ -319,12 +340,12 @@ abstract class Entity extends Eloquent implements EntityInterface
         $descendant = $this->closure->getQualifiedDescendantColumn();
 
         switch ($column) {
-            case 'ancestor':
+            case $this->closure->getAncestorColumn():
                 $query = $this->join($closure, $ancestor, '=', $primary)
                     ->where($descendant, '=', $this->getKey());
                 break;
 
-            case 'descendant':
+            case $this->closure->getDescendantColumn():
                 $query = $this->join($closure, $descendant, '=', $primary)
                     ->where($ancestor, '=', $this->getKey());
                 break;
@@ -350,12 +371,12 @@ abstract class Entity extends Eloquent implements EntityInterface
 
         return $this->whereIn($this->getQualifiedKeyName(), function ($qb) use ($self, $column, $withSelf) {
             switch ($column) {
-                case 'ancestor':
+                case $this->closure->getAncestorColumn():
                     $selectedColumn = $self->closure->getAncestorColumn();
                     $whereColumn = $self->closure->getDescendantColumn();
                     break;
 
-                case 'descendant':
+                case $this->closure->getDescendantColumn():
                     $selectedColumn = $self->closure->getDescendantColumn();
                     $whereColumn = $self->closure->getAncestorColumn();
                     break;
@@ -378,7 +399,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function getAncestors(array $columns = ['*'])
     {
-        return $this->joinClosureBy('ancestor')->get($columns);
+        return $this->joinClosureBy($this->closure->getAncestorColumn())->get($columns);
     }
 
     /**
@@ -392,7 +413,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function getAncestorsWhere($column, $operator = null, $value = null, array $columns = ['*'])
     {
-        return $this->joinClosureBy('ancestor')->where($column, $operator, $value)->get($columns);
+        return $this->joinClosureBy($this->closure->getAncestorColumn())->where($column, $operator, $value)->get($columns);
     }
 
     /**
@@ -402,7 +423,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function countAncestors()
     {
-        return $this->joinClosureBy('ancestor')->count();
+        return $this->joinClosureBy($this->closure->getAncestorColumn())->count();
     }
 
     /**
@@ -423,7 +444,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function getDescendants(array $columns = ['*'])
     {
-        return $this->joinClosureBy('descendant')->get($columns);
+        return $this->joinClosureBy($this->closure->getDescendantColumn())->get($columns);
     }
 
     /**
@@ -437,7 +458,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function getDescendantsWhere($column, $operator = null, $value = null, array $columns = ['*'])
     {
-        return $this->joinClosureBy('descendant')->where($column, $operator, $value)->get($columns);
+        return $this->joinClosureBy($this->closure->getDescendantColumn())->where($column, $operator, $value)->get($columns);
     }
 
     /**
@@ -447,7 +468,7 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     public function countDescendants()
     {
-        return $this->joinClosureBy('descendant')->count();
+        return $this->joinClosureBy($this->closure->getDescendantColumn())->count();
     }
 
     /**
@@ -1061,7 +1082,7 @@ abstract class Entity extends Eloquent implements EntityInterface
          */
         $instance = new static;
 
-        return $instance->orderBy('parent_id')->orderBy('position')
+        return $instance->orderBy('parent_id')->orderBy($instance->getPositionColumn())
             ->get($instance->prepareTreeQueryColumns($columns))->toTree();
     }
 
@@ -1204,7 +1225,7 @@ abstract class Entity extends Eloquent implements EntityInterface
                 $action = ($this->real_depth > $this->old_real_depth ? 'increment' : 'decrement');
                 $amount = abs($this->real_depth - $this->old_real_depth);
 
-                $this->subqueryClosureBy('descendant')->$action($this->getRealDepthColumn(), $amount);
+                $this->subqueryClosureBy($this->closure->getDescendantColumn())->$action($this->getRealDepthColumn(), $amount);
             }
 
             return true;
@@ -1369,7 +1390,7 @@ abstract class Entity extends Eloquent implements EntityInterface
     {
         $action = ($forceDelete === true ? 'forceDelete' : 'delete');
 
-        $ids = $this->joinClosureBy('descendant', $withSelf)->lists($this->getKeyName());
+        $ids = $this->joinClosureBy($this->closure->getDescendantColumn(), $withSelf)->lists($this->getKeyName());
 
         if ($forceDelete) {
             $this->closure->whereIn($this->closure->getDescendantColumn(), $ids)->delete();
