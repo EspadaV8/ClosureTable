@@ -136,9 +136,9 @@ abstract class ClosureTable extends Eloquent implements ClosureTableInterface
 
         foreach ($details as $row) {
             $instance = new static;
-            $instance->{$ancestor} = $row->ancestor;
-            $instance->{$descendant} = $row->descendant;
-            $instance->{$depth} = $row->d + $row->depth + 1;
+            $instance->{$ancestor} = $row->{$ancestor};
+            $instance->{$descendant} = $row->{$descendant};
+            $instance->{$depth} = $row->d + $row->{$depth} + 1;
             $instance->save();
         }
 
