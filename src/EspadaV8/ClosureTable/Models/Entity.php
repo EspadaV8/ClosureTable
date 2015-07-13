@@ -524,7 +524,7 @@ abstract class Entity extends Eloquent implements EntityInterface
         /**
          * @var QueryBuilder $query
          */
-        $query = $this->where($this->getParentIdColumn(), '=', $this->getKey());
+        $query = $this->queryByParentId();
 
         if (!is_null($position)) {
             if (is_array($position)) {
@@ -543,6 +543,19 @@ abstract class Entity extends Eloquent implements EntityInterface
         }
 
         return $query;
+    }
+
+    /**
+     * Starts a query by parent identifier.
+     *
+     * @param mixed $id
+     * @return QueryBuilder
+     */
+    protected function queryByParentId($id = null)
+    {
+        $id = ($id ?: $this->getKey());
+
+        return $this->where($this->getParentIdColumn(), '=', $id);
     }
 
     /**
@@ -572,7 +585,7 @@ abstract class Entity extends Eloquent implements EntityInterface
         if ($this->hasChildrenRelation()) {
             $result = $this->getRelation($this->getChildrenRelationIndex())->count();
         } else {
-            $result = $this->children()->count();
+            $result = $this->queryByParentId()->count();
         }
 
         return $result;
