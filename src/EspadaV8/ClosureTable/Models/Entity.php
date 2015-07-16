@@ -403,6 +403,17 @@ abstract class Entity extends Eloquent implements EntityInterface
     }
 
     /**
+     * Retrieves tree structured ancestors of a model.
+     *
+     * @param array $columns
+     * @return Collection
+     */
+    public function getAncestorsTree(array $columns = ['*'])
+    {
+        return $this->getAncestors($columns)->toTree();
+    }
+
+    /**
      * Retrieves ancestors applying given conditions.
      *
      * @param mixed $column
@@ -440,11 +451,24 @@ abstract class Entity extends Eloquent implements EntityInterface
      * Retrieves all descendants of a model.
      *
      * @param array $columns
-     * @return \EspadaV8\ClosureTable\Extensions\Collection
+     *
+     * @return Collection
      */
     public function getDescendants(array $columns = ['*'])
     {
         return $this->joinClosureBy($this->closure->getDescendantColumn())->get($columns);
+    }
+
+    /**
+     * Retrieves tree structured descendants of a model.
+     *
+     * @param array $columns
+     *
+     * @return Collection
+     */
+    public function getDescendantsTree(array $columns = ['*'])
+    {
+        return $this->getDescendants($columns)->toTree();
     }
 
     /**
@@ -500,7 +524,7 @@ abstract class Entity extends Eloquent implements EntityInterface
         /**
          * @var QueryBuilder $query
          */
-        $query = $this->where($this->getParentIdColumn(), '=', $this->getKey());
+        $query = $this->queryByParentId();
 
         if (!is_null($position)) {
             if (is_array($position)) {
@@ -519,6 +543,19 @@ abstract class Entity extends Eloquent implements EntityInterface
         }
 
         return $query;
+    }
+
+    /**
+     * Starts a query by parent identifier.
+     *
+     * @param mixed $id
+     * @return QueryBuilder
+     */
+    protected function queryByParentId($id = null)
+    {
+        $id = ($id ?: $this->getKey());
+
+        return $this->where($this->getParentIdColumn(), '=', $id);
     }
 
     /**
@@ -548,7 +585,7 @@ abstract class Entity extends Eloquent implements EntityInterface
         if ($this->hasChildrenRelation()) {
             $result = $this->getRelation($this->getChildrenRelationIndex())->count();
         } else {
-            $result = $this->children()->count();
+            $result = $this->queryByParentId()->count();
         }
 
         return $result;

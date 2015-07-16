@@ -7,7 +7,6 @@ use EspadaV8\ClosureTable\Models\Entity;
 use Event;
 use Mockery;
 use Orchestra\Testbench\TestCase;
-use Way\Tests\ModelHelpers;
 
 /**
  * Class BaseTestCase
@@ -15,8 +14,6 @@ use Way\Tests\ModelHelpers;
  */
 abstract class BaseTestCase extends TestCase
 {
-    use ModelHelpers;
-
     public static $debug = false;
     public static $sqliteInMemory = true;
 
