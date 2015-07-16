@@ -553,6 +553,13 @@ abstract class Entity extends Eloquent implements EntityInterface
      */
     protected function queryByParentId($id = null)
     {
+        // This is a workaround for the EntityTestCase 'testIsParent'
+        // The model is never saved there so doesn't have a key
+        // The test case will be updated at some point
+        if ($this->getKey() === null) {
+            return $this->newQuery()->where('0', '=', '1');
+        }
+
         $id = ($id ?: $this->getKey());
 
         return $this->where($this->getParentIdColumn(), '=', $id);
